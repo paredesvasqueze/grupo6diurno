@@ -47,7 +47,6 @@ namespace CapaDatos
                 
                 var query = "USP_Insert_Genero";
                 var param = new DynamicParameters();
-                param.Add("@nId_Genero", oGenero.nId_Genero);
                 param.Add("@cNombreGenero", oGenero.cNombreGenero);          
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);                
             }
