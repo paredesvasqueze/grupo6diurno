@@ -9,8 +9,7 @@ namespace CapaDomain
 
         public AutorDomain(AutorRepository AutorRepository)
         {
-           
-                _AutorRepository = AutorRepository;     
+            _AutorRepository = AutorRepository;
         }
 
         public IEnumerable<Autor> ObtenerAutorTodos()
@@ -19,25 +18,34 @@ namespace CapaDomain
             {
                 return _AutorRepository.ObtenerAutorTodos();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception("Error al obtener autores: " + ex.Message);
             }
-           
         }
 
-        public int InsertAutor(Autor oAutor)
+        public int InsertarAutor(Autor oAutor)
         {
             try
             {
-                return _AutorRepository.InsertAutor(oAutor);
+                return _AutorRepository.InsertarAutor(oAutor);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("Error al insertar autor: " + ex.Message);
             }
-            
+        }
+
+        public int ActualizarAutor(Autor oAutor)
+        {
+            try
+            {
+                return _AutorRepository.ActualizarAutor(oAutor);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar autor: " + ex.Message);
+            }
         }
     }
 }

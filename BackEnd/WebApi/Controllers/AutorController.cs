@@ -22,8 +22,8 @@ namespace WebApi.Controllers
             return Ok(Autors);
         }
 
-        [HttpPost("InsertAutor")]
-        public IActionResult InsertAutor(Autor oAutor)
+        [HttpPost("InsertarAutor")]
+        public IActionResult InsertarAutor(Autor oAutor)
         {
             var id = _AutorDomain.InsertarAutor(oAutor);
             return Ok(id);
@@ -32,14 +32,14 @@ namespace WebApi.Controllers
         [HttpDelete("EliminarAutorTodos")]
         public IActionResult EliminarAutorTodos()
         {
-            var Autors = _AutorDomain.ObtenerAutorTodos();
-            return Ok(Autors);
+            // Implementa la lógica de eliminación si es necesario
+            return Ok("Método no implementado");
         }
 
         [HttpPut("ActualizarAutor")]
         public IActionResult ActualizarAutor(Autor oAutor)
         {
-            var id = _AutorDomain.InsertarAutor(oAutor);
+            var id = _AutorDomain.ActualizarAutor(oAutor); // Cambiado a `ActualizarAutor`
             return Ok(id);
         }
     }
