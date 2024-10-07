@@ -16,8 +16,13 @@ builder.Services.AddSingleton(provider =>
 builder.Services.AddScoped<AlumnoRepository>();
 builder.Services.AddScoped<AlumnoDomain>();
 
+<<<<<<< HEAD
 builder.Services.AddScoped<GeneroRepository>();
 builder.Services.AddScoped<GeneroDomain>();
+=======
+builder.Services.AddScoped<AutorRepository>();
+builder.Services.AddScoped<AutorDomain>();
+>>>>>>> 0f1530fd79dabc530dff462321dcf9db4fa3fced
 
 // Registrar los controladores
 builder.Services.AddControllers();
