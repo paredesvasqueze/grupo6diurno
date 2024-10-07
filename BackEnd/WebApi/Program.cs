@@ -16,19 +16,19 @@ builder.Services.AddSingleton(provider =>
 builder.Services.AddScoped<AlumnoRepository>();
 builder.Services.AddScoped<AlumnoDomain>();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 builder.Services.AddScoped<GeneroRepository>();
 builder.Services.AddScoped<GeneroDomain>();
-=======
+
 builder.Services.AddScoped<AutorRepository>();
 builder.Services.AddScoped<AutorDomain>();
->>>>>>> 0f1530fd79dabc530dff462321dcf9db4fa3fced
-=======
+
+
+builder.Services.AddScoped<AutorRepository>();
+builder.Services.AddScoped<AutorDomain>();
+
 builder.Services.AddScoped<LibroRepository>();
 builder.Services.AddScoped<LibroDomain>();
-
->>>>>>> 4a5eba46f8df2fe1c0632a54ef3bd850c0cc8ec6
 
 // Registrar los controladores
 builder.Services.AddControllers();
