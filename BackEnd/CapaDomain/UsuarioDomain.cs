@@ -3,6 +3,7 @@ using CapaDatos;
 
 namespace CapaDomain
 {
+<<<<<<< HEAD
     public class UsuarioDomain // Cambié AutorDomain a UsuarioDomain
     {
         private readonly UsuarioRepository _usuarioRepository; // Cambié AutorRepository a UsuarioRepository
@@ -49,3 +50,51 @@ namespace CapaDomain
         }
     }
 }
+=======
+    public class UsuarioDomain
+    {
+        private readonly UsuarioRepository _UsuarioRepository;
+
+        public UsuarioDomain(UsuarioRepository UsuarioRepository)
+        {
+            _UsuarioRepository = UsuarioRepository;
+        }
+
+        public IEnumerable<Usuario> ObtenerUsuarioTodos()
+        {
+            try
+            {
+                return _UsuarioRepository.ObtenerUsuarioTodos();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener Usuarioes: " + ex.Message);
+            }
+        }
+
+        public int InsertarUsuario(Usuario oUsuario)
+        {
+            try
+            {
+                return _UsuarioRepository.InsertarUsuario(oUsuario);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al insertar Usuario: " + ex.Message);
+            }
+        }
+
+        public int ActualizarUsuario(Usuario oUsuario)
+        {
+            try
+            {
+                return _UsuarioRepository.ActualizarUsuario(oUsuario);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar Usuario: " + ex.Message);
+            }
+        }
+    }
+}
+>>>>>>> ac1f886e50cc18d8ee7457efdfeb12c9a7c83127

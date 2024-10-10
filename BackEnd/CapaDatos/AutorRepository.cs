@@ -68,6 +68,7 @@ namespace CapaDatos
             }
         }
 
+<<<<<<< HEAD
         public int ObtenerAutor(Autor oAutor)
         {
             using (var connection = _conexionSingleton.GetConnection())
@@ -81,5 +82,8 @@ namespace CapaDatos
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
             }
         }
+=======
+        
+>>>>>>> ac1f886e50cc18d8ee7457efdfeb12c9a7c83127
     }
 }
