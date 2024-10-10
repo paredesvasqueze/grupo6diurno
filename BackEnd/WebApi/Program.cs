@@ -16,6 +16,20 @@ builder.Services.AddSingleton(provider =>
 builder.Services.AddScoped<AlumnoRepository>();
 builder.Services.AddScoped<AlumnoDomain>();
 
+builder.Services.AddScoped<PrestamoRepository>();
+builder.Services.AddScoped<PrestamoDomain>();
+
+builder.Services.AddScoped<SancionRepository>();
+builder.Services.AddScoped<SancionDomain>();
+
+builder.Services.AddScoped<ReservaRepository>();
+builder.Services.AddScoped<ReservaDomain>();
+
+builder.Services.AddScoped<UsuarioRepository>();
+builder.Services.AddScoped<UsuarioDomain>();
+
+builder.Services.AddScoped<ComentarioRepository>();
+builder.Services.AddScoped<ComentarioDomain>();
 
 builder.Services.AddScoped<GeneroRepository>();
 builder.Services.AddScoped<GeneroDomain>();
