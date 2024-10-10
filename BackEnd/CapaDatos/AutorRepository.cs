@@ -68,18 +68,6 @@ namespace CapaDatos
             }
         }
 
-        public int ObtenerAutor(Autor oAutor)
-        {
-            using (var connection = _conexionSingleton.GetConnection())
-            {
-                connection.Open();
-                var query = "USP_Obtener_Autor";
-                var param = new DynamicParameters();
-                param.Add("@cNombre", oAutor.cNombre);
-                param.Add("@cNacionalidad", oAutor.cNacionalidad); // Corregido
-                param.Add("@dFechaNacimiento", oAutor.dFechaNacimiento);
-                return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
-            }
-        }
+        
     }
 }

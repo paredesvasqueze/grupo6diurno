@@ -1,0 +1,5 @@
+CREATE PROCEDURE USP_Select_Genero
+AS
+BEGIN
+    SELECT * FROM Genero;
+END
