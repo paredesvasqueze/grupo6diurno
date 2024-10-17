@@ -10,16 +10,16 @@ namespace WebApi.Controllers
     {
         private readonly ReservaDomain _ReservaDomain;
 
-        public ReservaController(ReservaDomain ReservaDomain)
+        public ReservaController(ReservaDomain reservaDomain)
         {
-            _ReservaDomain = ReservaDomain;
+            _ReservaDomain = reservaDomain;
         }
 
         [HttpGet("ObtenerReservaTodos")]
         public IActionResult ObtenerReservaTodos()
         {
-            var Reservas = _ReservaDomain.ObtenerReservaTodos();
-            return Ok(Reservas);
+            var reservas = _ReservaDomain.ObtenerReservaTodos();
+            return Ok(reservas);
         }
 
         [HttpPost("InsertarReserva")]
@@ -29,18 +29,32 @@ namespace WebApi.Controllers
             return Ok(id);
         }
 
-        [HttpDelete("EliminarReservaTodos")]
-        public IActionResult EliminarReservaTodos()
-        {
-            // Implementa la lógica de eliminación si es necesario
-            return Ok("Método no implementado");
-        }
-
         [HttpPut("ActualizarReserva")]
         public IActionResult ActualizarReserva(Reserva oReserva)
         {
-            var id = _ReservaDomain.ActualizarReserva(oReserva); // Cambiado a `ActualizarReserva`
-            return Ok(id);
+            try
+            {
+                var id = _ReservaDomain.ActualizarReserva(oReserva);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al actualizar la reserva: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("EliminarReserva")]
+        public IActionResult EliminarReserva(int nId_Reserva)
+        {
+            try
+            {
+                var id = _ReservaDomain.EliminarReserva(nId_Reserva);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al eliminar la reserva: {ex.Message}");
+            }
         }
     }
 }

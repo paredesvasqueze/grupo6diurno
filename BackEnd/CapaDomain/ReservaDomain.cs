@@ -7,9 +7,9 @@ namespace CapaDomain
     {
         private readonly ReservaRepository _ReservaRepository;
 
-        public ReservaDomain(ReservaRepository ReservaRepository)
+        public ReservaDomain(ReservaRepository reservaRepository)
         {
-            _ReservaRepository = ReservaRepository;
+            _ReservaRepository = reservaRepository;
         }
 
         public IEnumerable<Reserva> ObtenerReservaTodos()
@@ -18,9 +18,9 @@ namespace CapaDomain
             {
                 return _ReservaRepository.ObtenerReservaTodos();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al obtener Reservaes: " + ex.Message);
+                throw;
             }
         }
 
@@ -30,9 +30,9 @@ namespace CapaDomain
             {
                 return _ReservaRepository.InsertarReserva(oReserva);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al insertar Reserva: " + ex.Message);
+                throw;
             }
         }
 
@@ -42,9 +42,21 @@ namespace CapaDomain
             {
                 return _ReservaRepository.ActualizarReserva(oReserva);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al actualizar Reserva: " + ex.Message);
+                throw;
+            }
+        }
+
+        public int EliminarReserva(int nId_Reserva)
+        {
+            try
+            {
+                return _ReservaRepository.EliminarReserva(nId_Reserva);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

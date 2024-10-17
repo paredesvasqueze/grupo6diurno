@@ -10,16 +10,16 @@ namespace WebApi.Controllers
     {
         private readonly SancionDomain _SancionDomain;
 
-        public SancionController(SancionDomain SancionDomain)
+        public SancionController(SancionDomain sancionDomain)
         {
-            _SancionDomain = SancionDomain;
+            _SancionDomain = sancionDomain;
         }
 
         [HttpGet("ObtenerSancionTodos")]
         public IActionResult ObtenerSancionTodos()
         {
-            var Sancions = _SancionDomain.ObtenerSancionTodos();
-            return Ok(Sancions);
+            var sanciones = _SancionDomain.ObtenerSancionTodos();
+            return Ok(sanciones);
         }
 
         [HttpPost("InsertarSancion")]
@@ -29,18 +29,32 @@ namespace WebApi.Controllers
             return Ok(id);
         }
 
-        [HttpDelete("EliminarSancionTodos")]
-        public IActionResult EliminarSancionTodos()
-        {
-            // Implementa la lógica de eliminación si es necesario
-            return Ok("Método no implementado");
-        }
-
         [HttpPut("ActualizarSancion")]
         public IActionResult ActualizarSancion(Sancion oSancion)
         {
-            var id = _SancionDomain.ActualizarSancion(oSancion); // Cambiado a `ActualizarSancion`
-            return Ok(id);
+            try
+            {
+                var id = _SancionDomain.ActualizarSancion(oSancion);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al actualizar la sanción: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("EliminarSancion")]
+        public IActionResult EliminarSancion(int nId_Sancion)
+        {
+            try
+            {
+                var id = _SancionDomain.EliminarSancion(nId_Sancion);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al eliminar la sanción: {ex.Message}");
+            }
         }
     }
 }

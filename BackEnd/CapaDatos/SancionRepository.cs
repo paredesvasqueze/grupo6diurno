@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using CapaEntidad;
 using Dapper;
+using CapaEntidad;
 
 namespace CapaDatos
 {
@@ -21,8 +21,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 var query = "USP_GET_Sancion_Todos";
-                var param = new DynamicParameters();
-                return SqlMapper.Query<Sancion>(connection, query, param, commandType: CommandType.StoredProcedure);
+                return SqlMapper.Query<Sancion>(connection, query, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -37,7 +36,7 @@ namespace CapaDatos
                 param.Add("@cMotivo", oSancion.cMotivo);
                 param.Add("@dFechaInicio", oSancion.dFechaInicio);
                 param.Add("@dFechaFin", oSancion.dFechaFin);
-                param.Add("@nIn_Usuario", oSancion.nIn_Usuario);
+                param.Add("@nId_Usuario", oSancion.nId_Usuario);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
             }
         }
@@ -54,12 +53,12 @@ namespace CapaDatos
                 param.Add("@cMotivo", oSancion.cMotivo);
                 param.Add("@dFechaInicio", oSancion.dFechaInicio);
                 param.Add("@dFechaFin", oSancion.dFechaFin);
-                param.Add("@nIn_Usuario", oSancion.nIn_Usuario);
+                param.Add("@nId_Usuario", oSancion.nId_Usuario);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
             }
         }
 
-        public int BorrarSancion(int nId_Sancion)
+        public int EliminarSancion(int nId_Sancion)
         {
             using (var connection = _conexionSingleton.GetConnection())
             {
@@ -68,18 +67,6 @@ namespace CapaDatos
                 var param = new DynamicParameters();
                 param.Add("@nId_Sancion", nId_Sancion);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
-            }
-        }
-
-        public Sancion ObtenerSancion(int nId_Sancion)
-        {
-            using (var connection = _conexionSingleton.GetConnection())
-            {
-                connection.Open();
-                var query = "USP_Obtener_Sancion";
-                var param = new DynamicParameters();
-                param.Add("@nId_Sancion", nId_Sancion);
-                return SqlMapper.QuerySingleOrDefault<Sancion>(connection, query, param, commandType: CommandType.StoredProcedure);
             }
         }
     }

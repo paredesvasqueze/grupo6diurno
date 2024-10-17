@@ -10,16 +10,16 @@ namespace WebApi.Controllers
     {
         private readonly AutorDomain _AutorDomain;
 
-        public AutorController(AutorDomain AutorDomain)
+        public AutorController(AutorDomain autorDomain)
         {
-            _AutorDomain = AutorDomain;
+            _AutorDomain = autorDomain;
         }
 
         [HttpGet("ObtenerAutorTodos")]
         public IActionResult ObtenerAutorTodos()
         {
-            var Autors = _AutorDomain.ObtenerAutorTodos();
-            return Ok(Autors);
+            var autores = _AutorDomain.ObtenerAutorTodos();
+            return Ok(autores);
         }
 
         [HttpPost("InsertarAutor")]
@@ -29,18 +29,32 @@ namespace WebApi.Controllers
             return Ok(id);
         }
 
-        [HttpDelete("EliminarAutorTodos")]
-        public IActionResult EliminarAutorTodos()
-        {
-            // Implementa la lógica de eliminación si es necesario
-            return Ok("Método no implementado");
-        }
-
         [HttpPut("ActualizarAutor")]
         public IActionResult ActualizarAutor(Autor oAutor)
         {
-            var id = _AutorDomain.ActualizarAutor(oAutor); // Cambiado a `ActualizarAutor`
-            return Ok(id);
+            try
+            {
+                var id = _AutorDomain.ActualizarAutor(oAutor);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al actualizar el autor: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("EliminarAutor")]
+        public IActionResult EliminarAutor(int nId_Autor)
+        {
+            try
+            {
+                var id = _AutorDomain.EliminarAutor(nId_Autor);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al eliminar el autor: {ex.Message}");
+            }
         }
     }
 }

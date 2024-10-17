@@ -3,14 +3,13 @@ using CapaDatos;
 
 namespace CapaDomain
 {
-
     public class UsuarioDomain
     {
         private readonly UsuarioRepository _UsuarioRepository;
 
-        public UsuarioDomain(UsuarioRepository UsuarioRepository)
+        public UsuarioDomain(UsuarioRepository usuarioRepository)
         {
-            _UsuarioRepository = UsuarioRepository;
+            _UsuarioRepository = usuarioRepository;
         }
 
         public IEnumerable<Usuario> ObtenerUsuarioTodos()
@@ -19,9 +18,9 @@ namespace CapaDomain
             {
                 return _UsuarioRepository.ObtenerUsuarioTodos();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al obtener Usuarioes: " + ex.Message);
+                throw;
             }
         }
 
@@ -31,9 +30,9 @@ namespace CapaDomain
             {
                 return _UsuarioRepository.InsertarUsuario(oUsuario);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al insertar Usuario: " + ex.Message);
+                throw;
             }
         }
 
@@ -43,11 +42,22 @@ namespace CapaDomain
             {
                 return _UsuarioRepository.ActualizarUsuario(oUsuario);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al actualizar Usuario: " + ex.Message);
+                throw;
+            }
+        }
+
+        public int EliminarUsuario(int nId_Usuario)
+        {
+            try
+            {
+                return _UsuarioRepository.EliminarUsuario(nId_Usuario);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
 }
-

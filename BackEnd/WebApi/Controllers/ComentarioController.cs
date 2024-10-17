@@ -10,16 +10,16 @@ namespace WebApi.Controllers
     {
         private readonly ComentarioDomain _ComentarioDomain;
 
-        public ComentarioController(ComentarioDomain ComentarioDomain)
+        public ComentarioController(ComentarioDomain comentarioDomain)
         {
-            _ComentarioDomain = ComentarioDomain;
+            _ComentarioDomain = comentarioDomain;
         }
 
         [HttpGet("ObtenerComentarioTodos")]
         public IActionResult ObtenerComentarioTodos()
         {
-            var Comentarios = _ComentarioDomain.ObtenerComentarioTodos();
-            return Ok(Comentarios);
+            var comentarios = _ComentarioDomain.ObtenerComentarioTodos();
+            return Ok(comentarios);
         }
 
         [HttpPost("InsertarComentario")]
@@ -29,18 +29,32 @@ namespace WebApi.Controllers
             return Ok(id);
         }
 
-        [HttpDelete("EliminarComentarioTodos")]
-        public IActionResult EliminarComentarioTodos()
-        {
-            // Implementa la lógica de eliminación si es necesario
-            return Ok("Método no implementado");
-        }
-
         [HttpPut("ActualizarComentario")]
         public IActionResult ActualizarComentario(Comentario oComentario)
         {
-            var id = _ComentarioDomain.ActualizarComentario(oComentario); // Cambiado a `ActualizarComentario`
-            return Ok(id);
+            try
+            {
+                var id = _ComentarioDomain.ActualizarComentario(oComentario);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al actualizar el comentario: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("EliminarComentario")]
+        public IActionResult EliminarComentario(int nId_Comentario)
+        {
+            try
+            {
+                var id = _ComentarioDomain.EliminarComentario(nId_Comentario);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al eliminar el comentario: {ex.Message}");
+            }
         }
     }
 }

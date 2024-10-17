@@ -10,16 +10,16 @@ namespace WebApi.Controllers
     {
         private readonly PrestamoDomain _PrestamoDomain;
 
-        public PrestamoController(PrestamoDomain PrestamoDomain)
+        public PrestamoController(PrestamoDomain prestamoDomain)
         {
-            _PrestamoDomain = PrestamoDomain;
+            _PrestamoDomain = prestamoDomain;
         }
 
         [HttpGet("ObtenerPrestamoTodos")]
         public IActionResult ObtenerPrestamoTodos()
         {
-            var Prestamos = _PrestamoDomain.ObtenerPrestamoTodos();
-            return Ok(Prestamos);
+            var prestamos = _PrestamoDomain.ObtenerPrestamoTodos();
+            return Ok(prestamos);
         }
 
         [HttpPost("InsertarPrestamo")]
@@ -29,18 +29,32 @@ namespace WebApi.Controllers
             return Ok(id);
         }
 
-        [HttpDelete("EliminarPrestamoTodos")]
-        public IActionResult EliminarPrestamoTodos()
-        {
-            
-            return Ok("Método no implementado");
-        }
-
         [HttpPut("ActualizarPrestamo")]
         public IActionResult ActualizarPrestamo(Prestamo oPrestamo)
         {
-            var id = _PrestamoDomain.ActualizarPrestamo(oPrestamo);
-            return Ok(id);
+            try
+            {
+                var id = _PrestamoDomain.ActualizarPrestamo(oPrestamo);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al actualizar el préstamo: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("EliminarPrestamo")]
+        public IActionResult EliminarPrestamo(int nId_Prestamo)
+        {
+            try
+            {
+                var id = _PrestamoDomain.EliminarPrestamo(nId_Prestamo);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al eliminar el préstamo: {ex.Message}");
+            }
         }
     }
 }

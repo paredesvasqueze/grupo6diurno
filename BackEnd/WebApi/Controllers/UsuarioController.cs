@@ -6,21 +6,20 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-
     public class UsuarioController : ControllerBase
     {
         private readonly UsuarioDomain _UsuarioDomain;
 
-        public UsuarioController(UsuarioDomain UsuarioDomain)
+        public UsuarioController(UsuarioDomain usuarioDomain)
         {
-            _UsuarioDomain = UsuarioDomain;
+            _UsuarioDomain = usuarioDomain;
         }
 
         [HttpGet("ObtenerUsuarioTodos")]
         public IActionResult ObtenerUsuarioTodos()
         {
-            var Usuarios = _UsuarioDomain.ObtenerUsuarioTodos();
-            return Ok(Usuarios);
+            var usuarios = _UsuarioDomain.ObtenerUsuarioTodos();
+            return Ok(usuarios);
         }
 
         [HttpPost("InsertarUsuario")]
@@ -30,19 +29,32 @@ namespace WebApi.Controllers
             return Ok(id);
         }
 
-        [HttpDelete("EliminarUsuarioTodos")]
-        public IActionResult EliminarUsuarioTodos()
-        {
-            // Implementa la lógica de eliminación si es necesario
-            return Ok("Método no implementado");
-        }
-
         [HttpPut("ActualizarUsuario")]
         public IActionResult ActualizarUsuario(Usuario oUsuario)
         {
-            var id = _UsuarioDomain.ActualizarUsuario(oUsuario); // Cambiado a `ActualizarUsuario`
+            try
+            {
+                var id = _UsuarioDomain.ActualizarUsuario(oUsuario);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al actualizar el usuario: {ex.Message}");
+            }
+        }
 
-            return Ok(id);
+        [HttpDelete("EliminarUsuario")]
+        public IActionResult EliminarUsuario(int nId_Usuario)
+        {
+            try
+            {
+                var id = _UsuarioDomain.EliminarUsuario(nId_Usuario);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al eliminar el usuario: {ex.Message}");
+            }
         }
     }
 }

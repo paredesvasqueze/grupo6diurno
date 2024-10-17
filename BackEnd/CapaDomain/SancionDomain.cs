@@ -7,9 +7,9 @@ namespace CapaDomain
     {
         private readonly SancionRepository _SancionRepository;
 
-        public SancionDomain(SancionRepository SancionRepository)
+        public SancionDomain(SancionRepository sancionRepository)
         {
-            _SancionRepository = SancionRepository;
+            _SancionRepository = sancionRepository;
         }
 
         public IEnumerable<Sancion> ObtenerSancionTodos()
@@ -18,9 +18,9 @@ namespace CapaDomain
             {
                 return _SancionRepository.ObtenerSancionTodos();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al obtener Sanciones: " + ex.Message);
+                throw;
             }
         }
 
@@ -30,9 +30,9 @@ namespace CapaDomain
             {
                 return _SancionRepository.InsertarSancion(oSancion);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al insertar Sancion: " + ex.Message);
+                throw;
             }
         }
 
@@ -42,9 +42,21 @@ namespace CapaDomain
             {
                 return _SancionRepository.ActualizarSancion(oSancion);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al actualizar Sancion: " + ex.Message);
+                throw;
+            }
+        }
+
+        public int EliminarSancion(int nId_Sancion)
+        {
+            try
+            {
+                return _SancionRepository.EliminarSancion(nId_Sancion);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

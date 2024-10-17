@@ -7,9 +7,9 @@ namespace CapaDomain
     {
         private readonly PrestamoRepository _PrestamoRepository;
 
-        public PrestamoDomain(PrestamoRepository PrestamoRepository)
+        public PrestamoDomain(PrestamoRepository prestamoRepository)
         {
-            _PrestamoRepository = PrestamoRepository;
+            _PrestamoRepository = prestamoRepository;
         }
 
         public IEnumerable<Prestamo> ObtenerPrestamoTodos()
@@ -18,9 +18,9 @@ namespace CapaDomain
             {
                 return _PrestamoRepository.ObtenerPrestamoTodos();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al obtener Prestamoes: " + ex.Message);
+                throw;
             }
         }
 
@@ -30,9 +30,9 @@ namespace CapaDomain
             {
                 return _PrestamoRepository.InsertarPrestamo(oPrestamo);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al insertar Prestamo: " + ex.Message);
+                throw;
             }
         }
 
@@ -42,9 +42,21 @@ namespace CapaDomain
             {
                 return _PrestamoRepository.ActualizarPrestamo(oPrestamo);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al actualizar Prestamo: " + ex.Message);
+                throw;
+            }
+        }
+
+        public int EliminarPrestamo(int nId_Prestamo)
+        {
+            try
+            {
+                return _PrestamoRepository.EliminarPrestamo(nId_Prestamo);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

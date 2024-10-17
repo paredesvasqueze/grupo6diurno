@@ -13,10 +13,6 @@ builder.Services.AddSingleton(provider =>
     ConexionSingleton.GetInstance(provider.GetRequiredService<IConfiguration>()));
 
 // Registrar el repositorio y la capa de dominio
-builder.Services.AddScoped<AlumnoRepository>();
-builder.Services.AddScoped<AlumnoDomain>();
-
-
 builder.Services.AddScoped<PrestamoRepository>();
 builder.Services.AddScoped<PrestamoDomain>();
 

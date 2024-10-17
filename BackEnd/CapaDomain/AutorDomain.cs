@@ -7,9 +7,9 @@ namespace CapaDomain
     {
         private readonly AutorRepository _AutorRepository;
 
-        public AutorDomain(AutorRepository AutorRepository)
+        public AutorDomain(AutorRepository autorRepository)
         {
-            _AutorRepository = AutorRepository;
+            _AutorRepository = autorRepository;
         }
 
         public IEnumerable<Autor> ObtenerAutorTodos()
@@ -18,9 +18,9 @@ namespace CapaDomain
             {
                 return _AutorRepository.ObtenerAutorTodos();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al obtener autores: " + ex.Message);
+                throw;
             }
         }
 
@@ -30,9 +30,9 @@ namespace CapaDomain
             {
                 return _AutorRepository.InsertarAutor(oAutor);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al insertar autor: " + ex.Message);
+                throw;
             }
         }
 
@@ -42,9 +42,21 @@ namespace CapaDomain
             {
                 return _AutorRepository.ActualizarAutor(oAutor);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al actualizar autor: " + ex.Message);
+                throw;
+            }
+        }
+
+        public int EliminarAutor(int nId_Autor)
+        {
+            try
+            {
+                return _AutorRepository.EliminarAutor(nId_Autor);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

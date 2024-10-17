@@ -10,15 +10,16 @@ namespace WebApi.Controllers
     {
         private readonly LibroDomain _LibroDomain;
 
-        public LibroController(LibroDomain LibroDomain)
+        public LibroController(LibroDomain libroDomain)
         {
-            _LibroDomain = LibroDomain;
+            _LibroDomain = libroDomain;
         }
 
         [HttpGet("ObtenerLibroTodos")]
-        public List<Libro>ObtenerLibroTodos()
+        public IActionResult ObtenerLibroTodos()
         {
-            throw new NotImplementedException();
+            var libros = _LibroDomain.ObtenerLibroTodos();
+            return Ok(libros);
         }
 
         [HttpPost("InsertarLibro")]
@@ -31,23 +32,29 @@ namespace WebApi.Controllers
         [HttpPut("ActualizarLibro")]
         public IActionResult ActualizarLibro(Libro oLibro)
         {
-            var id = _LibroDomain.ActualizarLibro(oLibro);
-            return Ok(id);
+            try
+            {
+                var id = _LibroDomain.ActualizarLibro(oLibro);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al actualizar el libro: {ex.Message}");
+            }
         }
 
         [HttpDelete("EliminarLibro")]
-        public IActionResult EliminarLibro(int id)
+        public IActionResult EliminarLibro(int nId_Libro)
         {
             try
             {
-                _LibroDomain.EliminarLibro(id);
-                return Ok("Libro eliminado exitosamente.");
+                var id = _LibroDomain.EliminarLibro(nId_Libro);
+                return Ok(id);
             }
             catch (Exception ex)
             {
                 return BadRequest($"Error al eliminar el libro: {ex.Message}");
             }
         }
-
     }
 }

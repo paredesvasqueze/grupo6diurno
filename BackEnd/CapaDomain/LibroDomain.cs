@@ -1,6 +1,5 @@
 ﻿using CapaEntidad;
 using CapaDatos;
-using System.Collections.Generic;
 
 namespace CapaDomain
 {
@@ -8,24 +7,21 @@ namespace CapaDomain
     {
         private readonly LibroRepository _LibroRepository;
 
-        public LibroDomain(LibroRepository LibroRepository)
+        public LibroDomain(LibroRepository libroRepository)
         {
-           
-                _LibroRepository = LibroRepository;     
+            _LibroRepository = libroRepository;
         }
 
-        public List<Libro> ObtenerTodosLosLibros( )
+        public IEnumerable<Libro> ObtenerLibroTodos()
         {
             try
             {
-                return (List< Libro >)_LibroRepository.ObtenerLibroTodos();
+                return _LibroRepository.ObtenerLibroTodos();
             }
             catch (Exception)
             {
-
                 throw;
             }
-           
         }
 
         public int InsertarLibro(Libro oLibro)
@@ -38,7 +34,6 @@ namespace CapaDomain
             {
                 throw;
             }
-            
         }
 
         public int ActualizarLibro(Libro oLibro)
@@ -51,20 +46,18 @@ namespace CapaDomain
             {
                 throw;
             }
-
         }
 
-        public void EliminarLibro(int nId_Libro)
+        public int EliminarLibro(int nId_Libro)
         {
             try
             {
-                _LibroRepository.EliminarLibro(nId_Libro);
+                return _LibroRepository.EliminarLibro(nId_Libro);
             }
             catch (Exception)
             {
                 throw;
             }
-
         }
     }
 }

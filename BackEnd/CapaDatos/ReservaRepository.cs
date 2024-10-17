@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using CapaEntidad;
 using Dapper;
+using CapaEntidad;
 
 namespace CapaDatos
 {
@@ -21,8 +21,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 var query = "USP_GET_Reserva_Todos";
-                var param = new DynamicParameters();
-                return SqlMapper.Query<Reserva>(connection, query, param, commandType: CommandType.StoredProcedure);
+                return SqlMapper.Query<Reserva>(connection, query, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -55,7 +54,7 @@ namespace CapaDatos
             }
         }
 
-        public int BorrarReserva(int nId_Reserva)
+        public int EliminarReserva(int nId_Reserva)
         {
             using (var connection = _conexionSingleton.GetConnection())
             {
@@ -64,18 +63,6 @@ namespace CapaDatos
                 var param = new DynamicParameters();
                 param.Add("@nId_Reserva", nId_Reserva);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
-            }
-        }
-
-        public Reserva ObtenerReserva(int nId_Reserva)
-        {
-            using (var connection = _conexionSingleton.GetConnection())
-            {
-                connection.Open();
-                var query = "USP_Obtener_Reserva";
-                var param = new DynamicParameters();
-                param.Add("@nId_Reserva", nId_Reserva);
-                return SqlMapper.QuerySingleOrDefault<Reserva>(connection, query, param, commandType: CommandType.StoredProcedure);
             }
         }
     }

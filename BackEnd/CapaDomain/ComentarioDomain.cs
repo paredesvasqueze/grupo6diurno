@@ -7,9 +7,9 @@ namespace CapaDomain
     {
         private readonly ComentarioRepository _ComentarioRepository;
 
-        public ComentarioDomain(ComentarioRepository ComentarioRepository)
+        public ComentarioDomain(ComentarioRepository comentarioRepository)
         {
-            _ComentarioRepository = ComentarioRepository;
+            _ComentarioRepository = comentarioRepository;
         }
 
         public IEnumerable<Comentario> ObtenerComentarioTodos()
@@ -18,9 +18,9 @@ namespace CapaDomain
             {
                 return _ComentarioRepository.ObtenerComentarioTodos();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al obtener Comentarioes: " + ex.Message);
+                throw;
             }
         }
 
@@ -30,9 +30,9 @@ namespace CapaDomain
             {
                 return _ComentarioRepository.InsertarComentario(oComentario);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al insertar Comentario: " + ex.Message);
+                throw;
             }
         }
 
@@ -42,9 +42,21 @@ namespace CapaDomain
             {
                 return _ComentarioRepository.ActualizarComentario(oComentario);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("Error al actualizar Comentario: " + ex.Message);
+                throw;
+            }
+        }
+
+        public int EliminarComentario(int nId_Comentario)
+        {
+            try
+            {
+                return _ComentarioRepository.EliminarComentario(nId_Comentario);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
