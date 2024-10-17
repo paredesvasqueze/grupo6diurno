@@ -16,8 +16,7 @@ builder.Services.AddSingleton(provider =>
 builder.Services.AddScoped<AlumnoRepository>();
 builder.Services.AddScoped<AlumnoDomain>();
 
-<<<<<<< HEAD
-=======
+
 builder.Services.AddScoped<PrestamoRepository>();
 builder.Services.AddScoped<PrestamoDomain>();
 
@@ -35,17 +34,16 @@ builder.Services.AddScoped<ComentarioDomain>();
 
 builder.Services.AddScoped<GeneroRepository>();
 builder.Services.AddScoped<GeneroDomain>();
->>>>>>> a9ae54a9504d26dfedc20b51fcfc4d0959864a7f
+
 
 builder.Services.AddScoped<AutorRepository>();
 builder.Services.AddScoped<AutorDomain>();
 
-<<<<<<< HEAD
+
 builder.Services.AddScoped<LibroRepository>();
 builder.Services.AddScoped<LibroDomain>();
 
 
-=======
 
 builder.Services.AddScoped<AutorRepository>();
 builder.Services.AddScoped<AutorDomain>();
@@ -53,7 +51,7 @@ builder.Services.AddScoped<AutorDomain>();
 builder.Services.AddScoped<LibroRepository>();
 builder.Services.AddScoped<LibroDomain>();
 
->>>>>>> a9ae54a9504d26dfedc20b51fcfc4d0959864a7f
+
 // Registrar los controladores
 builder.Services.AddControllers();
 
