@@ -30,7 +30,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 IEnumerable<Genero> lstFound = new List<Genero>();
-                var query = "USP_Select_Genero";
+                var query = "USP_GET_Genero_Todos";
                 var param = new DynamicParameters();
                 //param.Add("@nConstGrupo", nConstGrupo, dbType: DbType.Int32);
                 lstFound = SqlMapper.Query<Genero>(connection, query, param, commandType: CommandType.StoredProcedure);
@@ -73,7 +73,7 @@ namespace CapaDatos
             {
                 connection.Open();
 
-                var query = "USP_Delete_Genero";
+                var query = "USP_Borrar_Genero";
                 var param = new DynamicParameters();
                 param.Add("@nId_Genero", nId_Genero);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);

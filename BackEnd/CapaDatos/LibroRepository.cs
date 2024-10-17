@@ -39,16 +39,16 @@ namespace CapaDatos
             }
         }
 
-        public List<Libro> ObtenerTodosLosLibros()
-        {
-            using (var connection = _conexionSingleton.GetConnection())
-            {
-                connection.Open();
+       // public List<Libro> ObtenerTodosLosLibros()
+        //{
+          //  using (var connection = _conexionSingleton.GetConnection())
+            //{
+              //  connection.Open();
 
-                var query = "USP_GET_Libro_Todos";
-                return SqlMapper.Query<Libro>(connection, query, commandType: CommandType.StoredProcedure).ToList();
-            }
-        }
+                //var query = "USP_GET_Libro_Todos";
+                //return SqlMapper.Query<Libro>(connection, query, commandType: CommandType.StoredProcedure).ToList();
+          //  }
+       // }
 
 
         public int InsertarLibro(Libro oLibro)

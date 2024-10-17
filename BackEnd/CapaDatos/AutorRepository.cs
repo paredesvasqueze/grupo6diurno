@@ -34,7 +34,7 @@ namespace CapaDatos
                 var query = "USP_Insert_Autor";
                 var param = new DynamicParameters();
                 param.Add("@cNombre", oAutor.cNombre);
-                param.Add("@cNacionalidad", oAutor.cNacionalidad); // Corregido
+                param.Add("@cNacionalidad", oAutor.cNacionalidad);
                 param.Add("@dFechaNacimiento", oAutor.dFechaNacimiento);
                 return (int)SqlMapper.ExecuteScalar(connection, query, param, commandType: CommandType.StoredProcedure);
             }
