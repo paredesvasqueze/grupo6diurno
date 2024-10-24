@@ -1,3 +1,7 @@
+CREATE DATABASE Biblioteca;
+
+USE Biblioteca;
+
 CREATE TABLE Usuario (
     nId_Usuario INT PRIMARY KEY IDENTITY(1,1),
     cNombre VARCHAR(150),

@@ -19,6 +19,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Borrar_Usuario
     @nId_Usuario INT
@@ -41,6 +42,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Borrar_Sancion
     @nId_Sancion INT
@@ -63,6 +65,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Borrar_Reserva
     @nId_Reserva INT
@@ -85,6 +88,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Borrar_Comentario
     @nId_Comentario INT
@@ -107,6 +111,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Borrar_Autor
     @nId_Autor INT
@@ -129,8 +134,9 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
-CREATE PROCEDURE USP_Eliminar_Libro
+CREATE PROCEDURE USP_Borrar_Libro
     @nId_Libro INT
 AS
 BEGIN
@@ -151,8 +157,9 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
-CREATE PROCEDURE USP_Eliminar_Prestamo
+CREATE PROCEDURE USP_Borrar_Prestamo
     @nId_Prestamo INT
 AS
 BEGIN
@@ -173,6 +180,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Actualizar_Prestamo
     @nId_Prestamo INT,
@@ -203,6 +211,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Actualizar_Usuario
     @nId_Usuario INT,
@@ -235,6 +244,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Actualizar_Sancion
     @nId_Sancion INT,
@@ -269,6 +279,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Actualizar_Reserva
     @nId_Reserva INT,
@@ -299,6 +310,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Actualizar_Libro
     @nId_Libro INT,
@@ -331,6 +343,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 create PROCEDURE USP_Actualizar_Genero
     @nId_Genero INT,
@@ -355,6 +368,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Actualizar_Comentario
     @nId_Comentario INT,
@@ -388,6 +402,7 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Actualizar_Autor
     @nId_Autor INT,
@@ -417,54 +432,63 @@ BEGIN
             ERROR_MESSAGE() AS MensajeError;
     END CATCH
 END
+go
 ------------------------------------------------------
 create procedure USP_GET_Autor_Todos
 as
 begin
 select * from Autor
 end
+go
 ------------------------------------------------------
 create procedure USP_GET_Genero_Todos
 as
 begin
 select * from Genero
 end
+go
 ------------------------------------------------------
 create procedure USP_GET_Usuario_Todos
 as
 begin
 select * from Usuario
 end
+go
 ------------------------------------------------------
 create procedure USP_GET_Libro_Todos
 as
 begin
 select * from Libro
 end
+go
 ------------------------------------------------------
 create procedure USP_GET_Prestamo_Todos
 as
 begin
 select * from Prestamo
 end
+go
 ------------------------------------------------------
 create procedure USP_GET_Reserva_Todos
 as
 begin
 select * from Reserva
 end
+go
 ------------------------------------------------------
 create procedure USP_GET_Comentario_Todos
 as
 begin
 select * from Comentario
 end
+go
 ------------------------------------------------------
 create procedure USP_GET_Sancion_Todos
 as
 begin
 select * from Sancion
 end
+go
 ------------------------------------------------------
 create procedure USP_Insert_Autor
 @cNombre varchar(255),
@@ -478,6 +502,7 @@ values
 (@cNombre,@cNacionalidad,@dFechaNacimiento)
 select cast(SCOPE_IDENTITY() as int)
 end
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Insert_Comentario
     @cComentario NVARCHAR(MAX),
@@ -492,6 +517,7 @@ BEGIN
 
     SELECT SCOPE_IDENTITY()
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Insert_Genero
     @cNombreGenero VARCHAR(100)
@@ -501,6 +527,7 @@ BEGIN
     VALUES (@cNombreGenero);
 	select cast(SCOPE_IDENTITY() as int)
 END
+go
 ------------------------------------------------------
 create procedure USP_Insert_Libro
 @nId_Libro int,
@@ -515,6 +542,7 @@ Insert into Libro
 values (@nId_Libro, @cTitulo, @dAnio, @nId_Autor, @nId_Genero);
 select cast(SCOPE_IDENTITY() as int)
 end
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Insert_Reserva
     @dFechaReserva DATETIME,
@@ -527,6 +555,7 @@ BEGIN
 
     SELECT SCOPE_IDENTITY()
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Insert_Sancion
     @nMonto INT,
@@ -541,6 +570,7 @@ BEGIN
 
     SELECT SCOPE_IDENTITY()
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Insert_Usuario
     @cNombre VARCHAR(150),
@@ -555,6 +585,7 @@ BEGIN
         (@cNombre, @cCorreo, @cTelefono, @cDocumentoIdentidad);
     SELECT CAST(SCOPE_IDENTITY() AS INT);
 END
+go
 ------------------------------------------------------
 CREATE PROCEDURE USP_Insert_Prestamo
     @dFechaPrestamo DATE,
@@ -569,4 +600,5 @@ BEGIN
         (@dFechaPrestamo, @dFechaDevolucion, @nId_Usuario, @nId_Libro);
     SELECT CAST(SCOPE_IDENTITY() AS INT);
 END
+go
 ------------------------------------------------------
