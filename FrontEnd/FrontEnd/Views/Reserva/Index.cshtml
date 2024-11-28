@@ -11,8 +11,8 @@
         <tr>
             <th>ID Reserva</th>
             <th>Fecha de Reserva</th>
-            <th>ID Usuario</th>
-            <th>ID Libro</th>
+            <th>Nombre Usuario</th>
+            <th>Titulo Libro</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -22,8 +22,8 @@
             <tr>
                 <td>@item.nId_Reserva</td>
                 <td>@item.dFechaReserva.ToString("dd/MM/yyyy")</td>
-                <td>@item.nId_Usuario</td>
-                <td>@item.nId_Libro</td>
+                <td>@item.cNombreUsuario</td>
+                <td>@item.cTitulo</td>
                 <td>
                     <button class="btn btn-warning" onclick="openEditModal(@item.nId_Reserva, '@item.dFechaReserva.ToString("yyyy-MM-dd")', @item.nId_Usuario, @item.nId_Libro)">Editar</button>
                     <button class="btn btn-danger" onclick="deleteReservation(@item.nId_Reserva)">Eliminar</button>

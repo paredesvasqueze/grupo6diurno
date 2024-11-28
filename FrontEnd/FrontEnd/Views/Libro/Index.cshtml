@@ -24,8 +24,8 @@
                 <td>@item.nId_Libro</td>
                 <td>@item.cTitulo</td>
                 <td>@item.dAnio</td>
-                <td>@item.nId_Autor</td> <!-- Mostrar ID del Autor, puede ser el nombre si se desea -->
-                <td>@item.nId_Genero</td> <!-- Mostrar ID del Género, puede ser el nombre si se desea -->
+                <td>@item.cNombreAutor</td> <!-- Mostrar ID del Autor, puede ser el nombre si se desea -->
+                <td>@item.cNombreGenero</td> <!-- Mostrar ID del Género, puede ser el nombre si se desea -->
                 <td>
                     <button class="btn btn-warning" onclick="openEditModal(@item.nId_Libro, '@item.cTitulo', @item.dAnio, @item.nId_Autor, @item.nId_Genero)">Editar</button>
                     <button class="btn btn-danger" onclick="deleteLibro(@item.nId_Libro)">Eliminar</button>

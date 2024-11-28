@@ -8,5 +8,6 @@
         public DateTime dFechaInicio { get; set; }
         public DateTime dFechaFin { get; set; }
         public int nId_Usuario { get; set; }
+        public string? cNombreUsuario { get; set; }
     }
 }

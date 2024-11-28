@@ -12,8 +12,8 @@
             <th>ID Comentario</th>
             <th>Comentario</th>
             <th>Fecha</th>
-            <th>ID Usuario</th>
-            <th>ID Libro</th>
+            <th>Nombre Usuario</th>
+            <th>Titulo Libro</th>
             <th>Puntuación</th>
             <th>Acciones</th>
         </tr>
@@ -25,8 +25,8 @@
                 <td>@item.nId_Comentario</td>
                 <td>@item.cComentario</td>
                 <td>@item.dFecha.ToString("dd/MM/yyyy")</td>
-                <td>@item.nId_Usuario</td>
-                <td>@item.nId_Libro</td>
+                <td>@item.cNombreUsuario</td>
+                <td>@item.cTitulo</td>
                 <td>@item.nPuntuacion</td>
                 <td>
                     <button class="btn btn-warning" onclick="openEditModal(@item.nId_Comentario, '@item.cComentario', '@item.dFecha.ToString("yyyy-MM-dd")', @item.nId_Usuario, @item.nId_Libro, @item.nPuntuacion)">Editar</button>
@@ -206,4 +206,4 @@
             }
         }
     </script>
-};
+}

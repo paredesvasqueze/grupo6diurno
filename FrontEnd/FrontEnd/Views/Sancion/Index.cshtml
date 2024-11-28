@@ -14,7 +14,7 @@
             <th>Motivo</th>
             <th>Fecha Inicio</th>
             <th>Fecha Fin</th>
-            <th>ID Usuario</th>
+            <th>Nombre de Usuario</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -27,7 +27,7 @@
                 <td>@item.cMotivo</td>
                 <td>@item.dFechaInicio.ToString("dd/MM/yyyy")</td>
                 <td>@item.dFechaFin.ToString("dd/MM/yyyy")</td>
-                <td>@item.nId_Usuario</td>
+                <td>@item.cNombreUsuario</td>
                 <td>
                     <button class="btn btn-warning" onclick="openEditModal(@item.nId_Sancion, @item.nMonto, '@item.cMotivo', '@item.dFechaInicio.ToString("yyyy-MM-dd")', '@item.dFechaFin.ToString("yyyy-MM-dd")', @item.nId_Usuario)">Editar</button>
                     <button class="btn btn-danger" onclick="deleteSancion(@item.nId_Sancion)">Eliminar</button>
@@ -206,4 +206,4 @@
             }
         }
     </script>
-};
+}
