@@ -1,0 +1,196 @@
+﻿@model IEnumerable<Usuario>
+@{
+    ViewData["Title"] = "Listado de Usuarios";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+<h2>Listado de Usuarios</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID Usuario</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Documento Identidad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.nId_Usuario</td>
+                <td>@item.cNombre</td>
+                <td>@item.cCorreo</td>
+                <td>@item.cTelefono</td>
+                <td>@item.cDocumentoIdentidad</td>
+                <td>
+                    <button class="btn btn-warning" onclick="openEditModal(@item.nId_Usuario, '@item.cNombre', '@item.cCorreo', '@item.cTelefono', '@item.cDocumentoIdentidad')">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteUser(@item.nId_Usuario)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary" onclick="openModal()">Nuevo</button>
+
+<!-- Modal para Nuevo Usuario -->
+<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Nuevo Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="newUserForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="cNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo</label>
+                        <input type="email" class="form-control" id="correo" name="cCorreo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono" name="cTelefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="documento">Documento Identidad</label>
+                        <input type="text" class="form-control" id="documento" name="cDocumentoIdentidad" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitUser()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Usuario -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Editar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editUserForm">
+                <input type="hidden" id="editId" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editNombre">Nombre</label>
+                        <input type="text" class="form-control" id="editNombre" name="cNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCorreo">Correo</label>
+                        <input type="email" class="form-control" id="editCorreo" name="cCorreo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editTelefono">Teléfono</label>
+                        <input type="text" class="form-control" id="editTelefono" name="cTelefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDocumento">Documento Identidad</label>
+                        <input type="text" class="form-control" id="editDocumento" name="cDocumentoIdentidad" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditUser()">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openModal() {
+            $('#newUserModal').modal('show');
+        }
+
+        function openEditModal(id, nombre, correo, telefono, documento) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editNombre').value = nombre;
+            document.getElementById('editCorreo').value = correo;
+            document.getElementById('editTelefono').value = telefono;
+            document.getElementById('editDocumento').value = documento;
+            $('#editUserModal').modal('show');
+        }
+
+        function submitUser() {
+            const data = {
+                cNombre: document.getElementById('nombre').value,
+                cCorreo: document.getElementById('correo').value,
+                cTelefono: document.getElementById('telefono').value,
+                cDocumentoIdentidad: document.getElementById('documento').value
+            };
+
+            fetch('/Usuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al crear el usuario.');
+                    }
+                });
+        }
+
+        function submitEditUser() {
+            const data = {
+                nId_Usuario: document.getElementById('editId').value,
+                cNombre: document.getElementById('editNombre').value,
+                cCorreo: document.getElementById('editCorreo').value,
+                cTelefono: document.getElementById('editTelefono').value,
+                cDocumentoIdentidad: document.getElementById('editDocumento').value
+            };
+
+            fetch('/Usuario', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al actualizar el usuario.');
+                    }
+                });
+        }
+
+        function deleteUser(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
+                fetch(`/Usuario/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Error al eliminar el usuario.');
+                        }
+                    });
+            }
+        }
+    </script>
+}

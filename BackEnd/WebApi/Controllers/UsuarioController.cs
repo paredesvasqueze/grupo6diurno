@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CapaDomain;
 using CapaEntidad;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UsuarioController : ControllerBase
@@ -43,18 +45,11 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("EliminarUsuario")]
-        public IActionResult EliminarUsuario(int nId_Usuario)
+        [HttpDelete("EliminarUsuario/{nIdUsuario}")]
+        public IActionResult EliminarUsuario(Int32 nIdUsuario)
         {
-            try
-            {
-                var id = _UsuarioDomain.EliminarUsuario(nId_Usuario);
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error al eliminar el usuario: {ex.Message}");
-            }
+            var id = _UsuarioDomain.EliminarUsuario(nIdUsuario);
+            return Ok(id);
         }
     }
 }

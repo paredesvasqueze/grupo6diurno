@@ -1,0 +1,209 @@
+﻿@model IEnumerable<Sancion>
+@{
+    ViewData["Title"] = "Listado de Sanciones";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+<h2>Listado de Sanciones</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID Sanción</th>
+            <th>Monto</th>
+            <th>Motivo</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>ID Usuario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.nId_Sancion</td>
+                <td>@item.nMonto</td>
+                <td>@item.cMotivo</td>
+                <td>@item.dFechaInicio.ToString("dd/MM/yyyy")</td>
+                <td>@item.dFechaFin.ToString("dd/MM/yyyy")</td>
+                <td>@item.nId_Usuario</td>
+                <td>
+                    <button class="btn btn-warning" onclick="openEditModal(@item.nId_Sancion, @item.nMonto, '@item.cMotivo', '@item.dFechaInicio.ToString("yyyy-MM-dd")', '@item.dFechaFin.ToString("yyyy-MM-dd")', @item.nId_Usuario)">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteSancion(@item.nId_Sancion)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary" onclick="openModal()">Nueva Sanción</button>
+
+<!-- Modal para Nueva Sanción -->
+<div class="modal fade" id="newSancionModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Nueva Sanción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="newSancionForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="monto">Monto</label>
+                        <input type="number" class="form-control" id="monto" name="nMonto" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="motivo">Motivo</label>
+                        <textarea class="form-control" id="motivo" name="cMotivo" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaInicio">Fecha de Inicio</label>
+                        <input type="date" class="form-control" id="fechaInicio" name="dFechaInicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaFin">Fecha de Fin</label>
+                        <input type="date" class="form-control" id="fechaFin" name="dFechaFin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idUsuario">ID Usuario</label>
+                        <input type="number" class="form-control" id="idUsuario" name="nId_Usuario" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitSancion()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Sanción -->
+<div class="modal fade" id="editSancionModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Editar Sanción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editSancionForm">
+                <input type="hidden" id="editId" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editMonto">Monto</label>
+                        <input type="number" class="form-control" id="editMonto" name="nMonto" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editMotivo">Motivo</label>
+                        <textarea class="form-control" id="editMotivo" name="cMotivo" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFechaInicio">Fecha de Inicio</label>
+                        <input type="date" class="form-control" id="editFechaInicio" name="dFechaInicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFechaFin">Fecha de Fin</label>
+                        <input type="date" class="form-control" id="editFechaFin" name="dFechaFin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIdUsuario">ID Usuario</label>
+                        <input type="number" class="form-control" id="editIdUsuario" name="nId_Usuario" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditSancion()">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openModal() {
+            $('#newSancionModal').modal('show');
+        }
+
+        function openEditModal(id, monto, motivo, fechaInicio, fechaFin, idUsuario) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editMonto').value = monto;
+            document.getElementById('editMotivo').value = motivo;
+            document.getElementById('editFechaInicio').value = fechaInicio;
+            document.getElementById('editFechaFin').value = fechaFin;
+            document.getElementById('editIdUsuario').value = idUsuario;
+            $('#editSancionModal').modal('show');
+        }
+
+        function submitSancion() {
+            const data = {
+                nMonto: document.getElementById('monto').value,
+                cMotivo: document.getElementById('motivo').value,
+                dFechaInicio: document.getElementById('fechaInicio').value,
+                dFechaFin: document.getElementById('fechaFin').value,
+                nId_Usuario: document.getElementById('idUsuario').value
+            };
+
+            fetch('/Sancion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al crear la sanción.');
+                    }
+                });
+        }
+
+        function submitEditSancion() {
+            const data = {
+                nId_Sancion: document.getElementById('editId').value,
+                nMonto: document.getElementById('editMonto').value,
+                cMotivo: document.getElementById('editMotivo').value,
+                dFechaInicio: document.getElementById('editFechaInicio').value,
+                dFechaFin: document.getElementById('editFechaFin').value,
+                nId_Usuario: document.getElementById('editIdUsuario').value
+            };
+
+            fetch('/Sancion', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al actualizar la sanción.');
+                    }
+                });
+        }
+
+        function deleteSancion(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar esta sanción?")) {
+                fetch(`/Sancion/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Error al eliminar la sanción.');
+                        }
+                    });
+            }
+        }
+    </script>
+};

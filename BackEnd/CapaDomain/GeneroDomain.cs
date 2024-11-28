@@ -52,17 +52,20 @@ namespace CapaDomain
             }
         }
 
-        public int EliminarGenero(int nId_Genero)
+        public int EliminarGenero(int oGenero)
         {
             try
             {
-                return _GeneroRepository.EliminarGenero(nId_Genero);
+                // Llamada al repositorio para eliminar el genero
+                return _GeneroRepository.EliminarGenero(oGenero);
             }
             catch (Exception)
             {
+                // Captura y vuelve a lanzar cualquier excepción que ocurra
                 throw;
             }
         }
+
 
 
     }

@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CapaDomain;
 using CapaEntidad;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class SancionController : ControllerBase
@@ -43,18 +45,11 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("EliminarSancion")]
-        public IActionResult EliminarSancion(int nId_Sancion)
+        [HttpDelete("EliminarSancion/{nIdSancion}")]
+        public IActionResult EliminarSancion(Int32 nIdSancion)
         {
-            try
-            {
-                var id = _SancionDomain.EliminarSancion(nId_Sancion);
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error al eliminar la sanción: {ex.Message}");
-            }
+            var id = _SancionDomain.EliminarSancion(nIdSancion);
+            return Ok(id);
         }
     }
 }

@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CapaDomain;
 using CapaEntidad;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class GeneroController : ControllerBase
@@ -19,7 +21,7 @@ namespace WebApi.Controllers
         public IActionResult ObtenerGeneroTodos()
         {
             var Generos = _GeneroDomain.ObtenerGeneroTodos();
-            return Ok(Generos);
+            return Ok(Generos); 
         }
 
         [HttpPost("InsertarGenero")]
@@ -44,21 +46,11 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("EliminarGenero")]
-        public IActionResult EliminarGenero(int nId_Genero)
+        [HttpDelete("EliminarGenero/{nIdGenero}")]
+        public IActionResult EliminarGenero(Int32 nIdGenero)
         {
-            try
-            {
-                var id = _GeneroDomain.EliminarGenero(nId_Genero);
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest($"Error al eliminar el género: {ex.Message}");
-            }
+            var id = _GeneroDomain.EliminarGenero(nIdGenero);
+            return Ok(id);
         }
-
-
     }
 }

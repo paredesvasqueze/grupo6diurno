@@ -1,0 +1,209 @@
+﻿@model IEnumerable<Comentario>
+@{
+    ViewData["Title"] = "Listado de Comentarios";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+<h2>Listado de Comentarios</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID Comentario</th>
+            <th>Comentario</th>
+            <th>Fecha</th>
+            <th>ID Usuario</th>
+            <th>ID Libro</th>
+            <th>Puntuación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.nId_Comentario</td>
+                <td>@item.cComentario</td>
+                <td>@item.dFecha.ToString("dd/MM/yyyy")</td>
+                <td>@item.nId_Usuario</td>
+                <td>@item.nId_Libro</td>
+                <td>@item.nPuntuacion</td>
+                <td>
+                    <button class="btn btn-warning" onclick="openEditModal(@item.nId_Comentario, '@item.cComentario', '@item.dFecha.ToString("yyyy-MM-dd")', @item.nId_Usuario, @item.nId_Libro, @item.nPuntuacion)">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteComentario(@item.nId_Comentario)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary" onclick="openModal()">Nuevo</button>
+
+<!-- Modal para Nuevo Comentario -->
+<div class="modal fade" id="newComentarioModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Nuevo Comentario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="newComentarioForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="comentario">Comentario</label>
+                        <textarea class="form-control" id="comentario" name="cComentario" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" class="form-control" id="fecha" name="dFecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idUsuario">ID Usuario</label>
+                        <input type="number" class="form-control" id="idUsuario" name="nId_Usuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idLibro">ID Libro</label>
+                        <input type="number" class="form-control" id="idLibro" name="nId_Libro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="puntuacion">Puntuación</label>
+                        <input type="number" class="form-control" id="puntuacion" name="nPuntuacion" min="1" max="5" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitComentario()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Comentario -->
+<div class="modal fade" id="editComentarioModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Editar Comentario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editComentarioForm">
+                <input type="hidden" id="editId" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editComentario">Comentario</label>
+                        <textarea class="form-control" id="editComentario" name="cComentario" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFecha">Fecha</label>
+                        <input type="date" class="form-control" id="editFecha" name="dFecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIdUsuario">ID Usuario</label>
+                        <input type="number" class="form-control" id="editIdUsuario" name="nId_Usuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIdLibro">ID Libro</label>
+                        <input type="number" class="form-control" id="editIdLibro" name="nId_Libro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPuntuacion">Puntuación</label>
+                        <input type="number" class="form-control" id="editPuntuacion" name="nPuntuacion" min="1" max="5" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditComentario()">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openModal() {
+            $('#newComentarioModal').modal('show');
+        }
+
+        function openEditModal(id, comentario, fecha, idUsuario, idLibro, puntuacion) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editComentario').value = comentario;
+            document.getElementById('editFecha').value = fecha;
+            document.getElementById('editIdUsuario').value = idUsuario;
+            document.getElementById('editIdLibro').value = idLibro;
+            document.getElementById('editPuntuacion').value = puntuacion;
+            $('#editComentarioModal').modal('show');
+        }
+
+        function submitComentario() {
+            const data = {
+                cComentario: document.getElementById('comentario').value,
+                dFecha: document.getElementById('fecha').value,
+                nId_Usuario: document.getElementById('idUsuario').value,
+                nId_Libro: document.getElementById('idLibro').value,
+                nPuntuacion: document.getElementById('puntuacion').value
+            };
+
+            fetch('/Comentario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al crear el comentario.');
+                    }
+                });
+        }
+
+        function submitEditComentario() {
+            const data = {
+                nId_Comentario: document.getElementById('editId').value,
+                cComentario: document.getElementById('editComentario').value,
+                dFecha: document.getElementById('editFecha').value,
+                nId_Usuario: document.getElementById('editIdUsuario').value,
+                nId_Libro: document.getElementById('editIdLibro').value,
+                nPuntuacion: document.getElementById('editPuntuacion').value
+            };
+
+            fetch('/Comentario', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al actualizar el comentario.');
+                    }
+                });
+        }
+
+        function deleteComentario(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar este comentario?")) {
+                fetch(`/Comentario/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Error al eliminar el comentario.');
+                        }
+                    });
+            }
+        }
+    </script>
+};

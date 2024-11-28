@@ -530,7 +530,6 @@ END
 go
 ------------------------------------------------------
 create procedure USP_Insert_Libro
-@nId_Libro int,
 @cTitulo varchar(255),
 @dAnio int,
 @nId_Autor int,
@@ -538,8 +537,8 @@ create procedure USP_Insert_Libro
 as
 begin
 Insert into Libro
-(nId_Libro, cTitulo, dAnio, nId_Autor, nId_Genero)
-values (@nId_Libro, @cTitulo, @dAnio, @nId_Autor, @nId_Genero);
+(cTitulo, dAnio, nId_Autor, nId_Genero)
+values (@cTitulo, @dAnio, @nId_Autor, @nId_Genero);
 select cast(SCOPE_IDENTITY() as int)
 end
 go

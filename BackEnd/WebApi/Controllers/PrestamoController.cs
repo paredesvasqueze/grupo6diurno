@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CapaDomain;
 using CapaEntidad;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class PrestamoController : ControllerBase
@@ -43,18 +45,11 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("EliminarPrestamo")]
-        public IActionResult EliminarPrestamo(int nId_Prestamo)
+        [HttpDelete("EliminarPrestamo/{nIdPrestamo}")]
+        public IActionResult EliminarPrestamo(Int32 nIdPrestamo)
         {
-            try
-            {
-                var id = _PrestamoDomain.EliminarPrestamo(nId_Prestamo);
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error al eliminar el préstamo: {ex.Message}");
-            }
+            var id = _PrestamoDomain.EliminarPrestamo(nIdPrestamo);
+            return Ok(id);
         }
     }
 }

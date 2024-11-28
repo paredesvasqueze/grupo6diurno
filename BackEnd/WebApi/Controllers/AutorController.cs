@@ -45,18 +45,11 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("EliminarAutor")]
-        public IActionResult EliminarAutor(int nId_Autor)
+        [HttpDelete("EliminarAutor/{nIdAutor}")]
+        public IActionResult EliminarAutor(Int32 nIdAutor)
         {
-            try
-            {
-                var id = _AutorDomain.EliminarAutor(nId_Autor);
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error al eliminar el autor: {ex.Message}");
-            }
+            var id = _AutorDomain.EliminarAutor(nIdAutor);
+            return Ok(id);
         }
     }
 }

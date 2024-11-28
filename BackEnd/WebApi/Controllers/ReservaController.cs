@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CapaDomain;
 using CapaEntidad;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ReservaController : ControllerBase
@@ -43,18 +45,11 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("EliminarReserva")]
-        public IActionResult EliminarReserva(int nId_Reserva)
+        [HttpDelete("EliminarReserva/{nIdReserva}")]
+        public IActionResult EliminarReserva(Int32 nIdReserva)
         {
-            try
-            {
-                var id = _ReservaDomain.EliminarReserva(nId_Reserva);
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error al eliminar la reserva: {ex.Message}");
-            }
+            var id = _ReservaDomain.EliminarReserva(nIdReserva);
+            return Ok(id);
         }
     }
 }

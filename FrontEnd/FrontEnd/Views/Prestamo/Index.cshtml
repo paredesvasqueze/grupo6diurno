@@ -1,0 +1,196 @@
+﻿@model IEnumerable<Prestamo>
+@{
+    ViewData["Title"] = "Listado de Préstamos";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+<h2>Listado de Préstamos</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID Préstamo</th>
+            <th>Fecha de Préstamo</th>
+            <th>Fecha de Devolución</th>
+            <th>ID Usuario</th>
+            <th>ID Libro</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.nId_Prestamo</td>
+                <td>@item.dFechaPrestamo.ToString("dd/MM/yyyy")</td>
+                <td>@item.dFechaDevolucion.ToString("dd/MM/yyyy")</td>
+                <td>@item.nId_Usuario</td>
+                <td>@item.nId_Libro</td>
+                <td>
+                    <button class="btn btn-warning" onclick="openEditModal(@item.nId_Prestamo, '@item.dFechaPrestamo.ToString("yyyy-MM-dd")', '@item.dFechaDevolucion.ToString("yyyy-MM-dd")', @item.nId_Usuario, @item.nId_Libro)">Editar</button>
+                    <button class="btn btn-danger" onclick="deletePrestamo(@item.nId_Prestamo)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary" onclick="openModal()">Nuevo</button>
+
+<!-- Modal para Nuevo Préstamo -->
+<div class="modal fade" id="newPrestamoModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Nuevo Préstamo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="newPrestamoForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="fechaPrestamo">Fecha de Préstamo</label>
+                        <input type="date" class="form-control" id="fechaPrestamo" name="dFechaPrestamo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaDevolucion">Fecha de Devolución</label>
+                        <input type="date" class="form-control" id="fechaDevolucion" name="dFechaDevolucion" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idUsuario">ID Usuario</label>
+                        <input type="number" class="form-control" id="idUsuario" name="nId_Usuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idLibro">ID Libro</label>
+                        <input type="number" class="form-control" id="idLibro" name="nId_Libro" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitPrestamo()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Préstamo -->
+<div class="modal fade" id="editPrestamoModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Editar Préstamo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editPrestamoForm">
+                <input type="hidden" id="editId" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editFechaPrestamo">Fecha de Préstamo</label>
+                        <input type="date" class="form-control" id="editFechaPrestamo" name="dFechaPrestamo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFechaDevolucion">Fecha de Devolución</label>
+                        <input type="date" class="form-control" id="editFechaDevolucion" name="dFechaDevolucion" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIdUsuario">ID Usuario</label>
+                        <input type="number" class="form-control" id="editIdUsuario" name="nId_Usuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIdLibro">ID Libro</label>
+                        <input type="number" class="form-control" id="editIdLibro" name="nId_Libro" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditPrestamo()">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openModal() {
+            $('#newPrestamoModal').modal('show');
+        }
+
+        function openEditModal(id, fechaPrestamo, fechaDevolucion, idUsuario, idLibro) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editFechaPrestamo').value = fechaPrestamo;
+            document.getElementById('editFechaDevolucion').value = fechaDevolucion;
+            document.getElementById('editIdUsuario').value = idUsuario;
+            document.getElementById('editIdLibro').value = idLibro;
+            $('#editPrestamoModal').modal('show');
+        }
+
+        function submitPrestamo() {
+            const data = {
+                dFechaPrestamo: document.getElementById('fechaPrestamo').value,
+                dFechaDevolucion: document.getElementById('fechaDevolucion').value,
+                nId_Usuario: document.getElementById('idUsuario').value,
+                nId_Libro: document.getElementById('idLibro').value
+            };
+
+            fetch('/Prestamo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al crear el préstamo.');
+                    }
+                });
+        }
+
+        function submitEditPrestamo() {
+            const data = {
+                nId_Prestamo: document.getElementById('editId').value,
+                dFechaPrestamo: document.getElementById('editFechaPrestamo').value,
+                dFechaDevolucion: document.getElementById('editFechaDevolucion').value,
+                nId_Usuario: document.getElementById('editIdUsuario').value,
+                nId_Libro: document.getElementById('editIdLibro').value
+            };
+
+            fetch('/Prestamo', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al actualizar el préstamo.');
+                    }
+                });
+        }
+
+        function deletePrestamo(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar este préstamo?")) {
+                fetch(`/Prestamo/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Error al eliminar el préstamo.');
+                        }
+                    });
+            }
+        }
+    </script>
+}

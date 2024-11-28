@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CapaDomain;
 using CapaEntidad;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class LibroController : ControllerBase
@@ -43,18 +45,11 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("EliminarLibro")]
-        public IActionResult EliminarLibro(int nId_Libro)
+        [HttpDelete("EliminarLibro/{nIdLibro}")]
+        public IActionResult EliminarLibro(Int32 nIdLibro)
         {
-            try
-            {
-                var id = _LibroDomain.EliminarLibro(nId_Libro);
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error al eliminar el libro: {ex.Message}");
-            }
+            var id = _LibroDomain.EliminarLibro(nIdLibro);
+            return Ok(id);
         }
     }
 }

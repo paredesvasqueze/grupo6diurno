@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CapaDomain;
 using CapaEntidad;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ComentarioController : ControllerBase
@@ -43,18 +45,11 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("EliminarComentario")]
-        public IActionResult EliminarComentario(int nId_Comentario)
+        [HttpDelete("EliminarComentario/{nIdComentario}")]
+        public IActionResult EliminarComentario(Int32 nIdComentario)
         {
-            try
-            {
-                var id = _ComentarioDomain.EliminarComentario(nId_Comentario);
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error al eliminar el comentario: {ex.Message}");
-            }
+            var id = _ComentarioDomain.EliminarComentario(nIdComentario);
+            return Ok(id);
         }
     }
 }

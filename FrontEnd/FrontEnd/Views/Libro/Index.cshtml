@@ -1,0 +1,216 @@
+﻿@model IEnumerable<Libro>
+@{
+    ViewData["Title"] = "Listado de Libros";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+<h2>Listado de Libros</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID Libro</th>
+            <th>Título</th>
+            <th>Año</th>
+            <th>Autor</th>
+            <th>Género</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.nId_Libro</td>
+                <td>@item.cTitulo</td>
+                <td>@item.dAnio</td>
+                <td>@item.nId_Autor</td> <!-- Mostrar ID del Autor, puede ser el nombre si se desea -->
+                <td>@item.nId_Genero</td> <!-- Mostrar ID del Género, puede ser el nombre si se desea -->
+                <td>
+                    <button class="btn btn-warning" onclick="openEditModal(@item.nId_Libro, '@item.cTitulo', @item.dAnio, @item.nId_Autor, @item.nId_Genero)">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteLibro(@item.nId_Libro)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary" onclick="openModal()">Nuevo</button>
+
+<!-- Modal para Nuevo Libro -->
+<div class="modal fade" id="newLibroModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Nuevo Libro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="newLibroForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" class="form-control" id="titulo" name="cTitulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="anio">Año</label>
+                        <input type="number" class="form-control" id="anio" name="dAnio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="autor">Autor</label>
+                        <select class="form-control" id="autor" name="nId_Autor" required>
+                            @foreach (var autor in ViewBag.Autores)
+                            {
+                                <option value="@autor.nId_Autor">@autor.cNombre</option> <!-- Se muestra el nombre del autor -->
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="genero">Género</label>
+                        <select class="form-control" id="genero" name="nId_Genero" required>
+                            @foreach (var genero in ViewBag.Generos)
+                            {
+                                <option value="@genero.nId_Genero">@genero.cNombreGenero</option> <!-- Se muestra el nombre del género -->
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitLibro()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Libro -->
+<div class="modal fade" id="editLibroModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Editar Libro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editLibroForm">
+                <input type="hidden" id="editId" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editTitulo">Título</label>
+                        <input type="text" class="form-control" id="editTitulo" name="cTitulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAnio">Año</label>
+                        <input type="number" class="form-control" id="editAnio" name="dAnio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAutor">Autor</label>
+                        <select class="form-control" id="editAutor" name="nId_Autor" required>
+                            @foreach (var autor in ViewBag.Autores)
+                            {
+                                <option value="@autor.nId_Autor">@autor.cNombre</option> <!-- Se muestra el nombre del autor -->
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editGenero">Género</label>
+                        <select class="form-control" id="editGenero" name="nId_Genero" required>
+                            @foreach (var genero in ViewBag.Generos)
+                            {
+                                <option value="@genero.nId_Genero">@genero.cNombreGenero</option> <!-- Se muestra el nombre del género -->
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditLibro()">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openModal() {
+            $('#newLibroModal').modal('show');
+        }
+
+        function openEditModal(id, titulo, anio, autorId, generoId) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editTitulo').value = titulo;
+            document.getElementById('editAnio').value = anio;
+            document.getElementById('editAutor').value = autorId;
+            document.getElementById('editGenero').value = generoId;
+            $('#editLibroModal').modal('show');
+        }
+
+        function submitLibro() {
+            const data = {
+                cTitulo: document.getElementById('titulo').value,
+                dAnio: document.getElementById('anio').value,
+                nId_Autor: document.getElementById('autor').value,
+                nId_Genero: document.getElementById('genero').value
+            };
+
+            fetch('/Libro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al crear el libro.');
+                    }
+                });
+        }
+
+        function submitEditLibro() {
+            const data = {
+                nId_Libro: document.getElementById('editId').value,
+                cTitulo: document.getElementById('editTitulo').value,
+                dAnio: document.getElementById('editAnio').value,
+                nId_Autor: document.getElementById('editAutor').value,
+                nId_Genero: document.getElementById('editGenero').value
+            };
+
+            fetch('/Libro', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error al actualizar el libro.');
+                    }
+                });
+        }
+
+        function deleteLibro(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar este libro?")) {
+                fetch(`/Libro/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Error al eliminar el libro.');
+                        }
+                    });
+            }
+        }
+    </script>
+}
