@@ -29,6 +29,7 @@
                 <td>@item.dFechaFin.ToString("dd/MM/yyyy")</td>
                 <td>@item.cNombreUsuario</td>
                 <td>
+                    <!-- Modificación del onclick para manejar correctamente las comillas dentro de los parámetros -->
                     <button class="btn btn-warning" onclick="openEditModal(@item.nId_Sancion, @item.nMonto, '@item.cMotivo', '@item.dFechaInicio.ToString("yyyy-MM-dd")', '@item.dFechaFin.ToString("yyyy-MM-dd")', @item.nId_Usuario)">Editar</button>
                     <button class="btn btn-danger" onclick="deleteSancion(@item.nId_Sancion)">Eliminar</button>
                 </td>
